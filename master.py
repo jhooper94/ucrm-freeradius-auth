@@ -1,12 +1,11 @@
- #!/usr/bin/python
-from urllib2 import Request, urlopen
-import json, os, MySQLdb
+ from urllib2 import Request, urlopen
+import json, os, MySQLdb, requests
 # Set the count to a number above the number of clients you have
 count = 1700
 keywords = ('servicePlanName', 'firstName', 'lastName')
 headers = {
   'Content-Type': 'application/json',
-  'X-Auth-App-Key': 'put the app auth read key here'
+  'X-Auth-App-Key': 'Put the app auth read key here'
 }
 # all variables needed. Set the address correctly to the same as what ucrm is running on.
 url = "https://"ucrm address here"/api/v1.0/clients/services/"
@@ -35,59 +34,66 @@ db.close()
 # Start of while loop
 id = 1
 while (id < count):
+        # Checks to make sure the url is valid if not skips it
+        valid = requests.get(url + str(id) + url1, headers=headers)
+        if valid.status_code == 200:
         # Request the mac address and write them to a file
-        request = Request(url + str(id) + url1, headers=headers)
-        response_body = urlopen(request).read()
-        file = open(str(id) + ".json","w")
-        file.write(response_body)
-        file.close()
+                request = Request(url + str(id) + url1, headers=headers)
+                response_body = urlopen(request).read()
+                file = open(str(id) + ".json","w")
+                file.write(response_body)
+                file.close()
 
-        # Open the file with the mac address and write it to free radius database
-        with open(str(id) + '.json') as json_file:
-                for line in json_file.readlines():
-                        mac = json.loads(line)
+                # Open the file with the mac address and write it to free radius database
+                with open(str(id) + '.json') as json_file:
+                        for line in json_file.readlines():
+                                mac = json.loads(line)
 
-        for mac in mac:
-                # change database authentication details to match yours.
-                db = MySQLdb.connect("localhost","root","password","radius")
-                cursor = db.cursor()
-                try:
-                        cursor.execute(sql + mac["macAddress"] + sql1)
-                        db.commit()
-                        print "It works" + str(id)
-                except:
-                        db.rollback()
-                        print "It didn't"
-                        print(sql + mac["macAddress"] + sql1)
-                db.close()
+                for mac in mac:
+                        # change database authentication details to match yours.
+                        db = MySQLdb.connect("localhost","root","Password here","radius")
+                        cursor = db.cursor()
+                        try:
+                                cursor.execute(sql + mac["macAddress"] + sql1)
+                                db.commit()
+                                print "It works" + str(id)
+                        except:
+                                db.rollback()
+                                print "It didn't"
+                                print(sql + mac["macAddress"] + sql1)
+                        db.close()
 
-        # request the package and write them to a file
-        request1 = Request(url2 + str(id), headers=headers)
-        response_body2 = urlopen(request1).read()
-        file = open(str(id) + "-speed.json","w")
-        file.write(response_body2)
-        file.close()
+                # request the package and write them to a file
+                request1 = Request(url2 + str(id), headers=headers)
+                response_body2 = urlopen(request1).read()
+                file = open(str(id) + "-speed.json","w")
+                file.write(response_body2)
+                file.close()
 
-        keywords = ('servicePlanName')
-        # opens the files containing the package and writes them to the database
-        with open(str(id) + '-speed.json') as json_file:
-                # Change authentication details to match yours.
-                db = MySQLdb.connect("localhost","root","password","radius")
-                cursor = db.cursor()
-                for line in json_file.readlines():
+                keywords = ('servicePlanName')
+                # opens the files containing the package and writes them to the database
+                with open(str(id) + '-speed.json') as json_file:
+                        # Change authentication details to match yours.
+                        db = MySQLdb.connect("localhost","root","Password here","radius")
+                        cursor = db.cursor()
+                        for line in json_file.readlines():
 
-                        json_dict = json.loads(line)
-                        if any(keyword in json_dict['servicePlanName'].lower() for keyword in keywords):
-                                try:
-                                        cursor.execute(sql2 + mac["macAddress"] + sql3 + "," + sql3 + json_dict["servicePlanName"] + sql4)
-                                        db.commit()
-                                        print "It works" + str(id)
-                                except:
-                                        db.rollback()
-                                        print "It didn't no mac address"
-                                db.close()
-                        # Deletes all the files created
-                        os.remove(str(id)+".json")
-                        os.remove(str(id)+"-speed.json")
-                        # starts over the while loop.
+                                json_dict = json.loads(line)
+                                if any(keyword in json_dict['servicePlanName'].lower() for keyword in keywords):
+                                        try:
+                                                cursor.execute(sql2 + mac["macAddress"] + sql3 + "," + sql3 + json_dict["servicePlanName"] + sql4)
+                                                db.commit()
+                                                print "It works" + str(id)
+                                        except:
+                                                db.rollback()
+                                                print "It didn't no mac address"
+                                        db.close()
+                                # Deletes all the files created
+                                os.remove(str(id)+".json")
+                                os.remove(str(id)+"-speed.json")
+                                # starts over the while loop.
                         id = id + 1
+        # If url is not valid
+        else:
+                id = id + 1
+                print "no client here"
