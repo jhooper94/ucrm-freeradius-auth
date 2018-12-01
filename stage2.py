@@ -12,7 +12,7 @@ try:
 	cursor.execute("FLUSH PRIVILEGES;")
 	db.commit()
 	print "all good"
-	urllib.urlretrieve ("https://raw.githubusercontent.com/jhooper94/ucrm-test/master/stage3.sh", "stage3.sh")
+	urllib.urlretrieve ("https://github.com/jhooper94/ucrm-freeradius-auth/edit/master/stage3.sh", "stage3.sh")
 	subprocess.call(['chmod', '+x', 'stage3.sh'])
 	
 	subprocess.call("./stage2.sh")
