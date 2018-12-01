@@ -22,7 +22,7 @@ chown -R freerad:freerad /etc/freeradius/3.0/mods-enabled/sql
 
 systemctl restart freeradius.service
 
-wget https://raw.githubusercontent.com/jhooper94/ucrm-test/master/ucrmsetup.py
+wget https://raw.githubusercontent.com/jhooper94/ucrm-freeradius-auth/master/ucrmsetup.py
 
 python ucrmsetup.py
 
