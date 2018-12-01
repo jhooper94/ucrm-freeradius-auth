@@ -1,10 +1,8 @@
 #!/bin/bash
 
-sudo su
+sudo apt-get install freeradius freeradius-mysql freeradius-utils
 
-apt-get install freeradius freeradius-mysql freeradius-utils
-
-apt-get install freeradius freeradius-mysql freeradius-utils
+sudo apt-get install freeradius freeradius-mysql freeradius-utils
 
 mysql -u root -p radius < /etc/freeradius/3.0/mods-config/sql/main/mysql/schema.sql
 
