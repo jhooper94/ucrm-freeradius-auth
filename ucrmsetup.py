@@ -26,10 +26,6 @@ f.close()
 
 print "Time to configure"
 
-address = raw_input("Inter the address of the freeradius sql server:  ")
-
-username = raw_input("Inter the username to log into the sql server:  ")
-
 password = raw_input("Inter the Password to log into the sql server:  ")
 
 ucrm_url = raw_input("Inter in the url for ucrm, can be ip address:  ")
@@ -44,9 +40,9 @@ client_number = raw_input("Inter in a number above the number of clients you hav
 file = open("config.ini","a+")
 file.write("[Radius]")
 file.write("\n")
-file.write("address = " + address)
+file.write("address = localhost")
 file.write("\n")
-file.write("username = " + username)
+file.write("username = root")
 file.write("\n")
 file.write("password = " + password)
 file.write("\n")
