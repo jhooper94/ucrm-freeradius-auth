@@ -1,4 +1,4 @@
-import MySQLdb, urllib2, subprocess
+import MySQLdb, urllib, subprocess
 
 #User inputs sql loggin details
 #username = raw_input("Put in the username you set for the sql database: ")
