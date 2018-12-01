@@ -22,6 +22,8 @@ sudo apt -y install mariadb-server mariadb-client
 
 sudo apt install python-pip
 
+sudo pip install requests
+
 sudo apt-get install python-mysqldb
 
 wget https://raw.githubusercontent.com/jhooper94/ucrm-freeradius-auth/master/stage2.py
