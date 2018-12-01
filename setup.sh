@@ -24,6 +24,6 @@ sudo apt install python-pip
 
 sudo pip install MySQL-python
 
-wget https://raw.githubusercontent.com/jhooper94/ucrm-test/master/stage2.py
+wget https://raw.githubusercontent.com/jhooper94/ucrm-freeradius-auth/master/stage2.py
 
 python stage2.py
