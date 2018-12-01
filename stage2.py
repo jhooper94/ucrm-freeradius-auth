@@ -4,7 +4,7 @@ import MySQLdb, urllib2, subprocess
 #username = raw_input("Put in the username you set for the sql database: ")
 password = raw_input("Type the password you set to log into sql database: ")
 
-db = MySQLdb.connect("localhost", username, password)
+db = MySQLdb.connect("localhost", "root", password)
 cursor = db.cursor()
 try:
 	cursor.execute("create DATABASE radius")
