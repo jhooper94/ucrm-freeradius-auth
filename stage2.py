@@ -8,7 +8,7 @@ db = MySQLdb.connect("localhost", "root", password)
 cursor = db.cursor()
 try:
 	cursor.execute('create DATABASE radius')
-	cursor.execute('GRANT ALL ON radius.* TO root@localhost IDENTIFIED BY "radiuspassword"')
+	cursor.execute('GRANT ALL ON root.* TO root@localhost IDENTIFIED BY "radiuspassword"')
 	cursor.execute('FLUSH PRIVILEGES')
 	db.commit()
 	print "all good"
