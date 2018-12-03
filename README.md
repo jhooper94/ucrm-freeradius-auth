@@ -1,4 +1,4 @@
-# ucrm-freeradius
+# ucrm-freeradius v1.5
 
 # Type command bellow in a fresh ubuntu 18.04 server to get started and follow the prompts as they pop up.
 
@@ -9,3 +9,7 @@ You will use daloradius to set the packages so this script can pull the package 
 This script currently does not have live sync and the way I have it implemented currently is everytime a package change or device mac address is added or changed you will have to run it. But live sync is planned for the future. 
 If you like the script or it helped you out and think I deserve a coffee
 https://www.paypal.me/jhoop94
+
+
+#Roadmap
+enable live syncing and trigger syncing through the use of ucrm pluggins.
