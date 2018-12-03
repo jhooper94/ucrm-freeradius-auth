@@ -4,9 +4,7 @@ sudo apt-add-repository multiverse && sudo apt-get update
 
 sudo apt-get upgrade
 
-sudo apt install python
-
-sudo apt-get install apache2 
+sudo apt-get install apache2 python unzip 
 
 sudo apt-get install php libapache2-mod-php php-gd php-common php-mail php-mail-mime php-mysql php-pear php-db php-mbstring php-xml php-curl
 
