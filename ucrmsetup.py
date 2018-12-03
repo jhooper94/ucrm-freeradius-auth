@@ -59,3 +59,6 @@ file.write("[clients]")
 file.write("\n")
 file.write(" client_number = " + client_number)
 file.close()
+
+print "Just type ,python master.py, into cli to run the script to pull the user's mac address and there package name into freeradius."
+print "Go to http://,address of server,/daloradius to change set up the packages name and speed so that it will set speed limits for the clients."
