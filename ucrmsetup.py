@@ -34,8 +34,9 @@ api_key = raw_input("Inter in ucrm api key:  ")
 
 client_number = raw_input("Inter in a number above the number of clients you have:  ")
 
-
-
+php = open("/var/www/html/daloradius/library/daloradius.conf.php","a+")
+php.write("$configValues['CONFIG_DB_PASS'] = '" + password + "';")
+php.close()
 
 file = open("config.ini","a+")
 file.write("[Radius]")
