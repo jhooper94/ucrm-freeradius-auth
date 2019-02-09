@@ -1,6 +1,6 @@
 from urllib2 import Request, urlopen
 import json, os, MySQLdb, requests, configparser
-
+#v1.5b
 #Parse Config File. To fill out the important information needed to make the script work.
 config = configparser.ConfigParser()
 config.readfp(open(r'config.ini'))
@@ -18,6 +18,21 @@ headers = {
   'Content-Type': 'application/json',
   'X-Auth-App-Key': ucrm_key
 }
+#progressbar
+def progressbar(it, prefix="", size=60):
+    count = len(it)
+    def _show(_id):
+        x = int(size*_id/count)
+        sys.stdout.write("%s[%s%s] %i/%i\r" % (prefix, "#"*x, "."*(size-x), _id, count))
+        sys.stdout.flush()
+
+    _show(0)
+    for id, item in enumerate(it):
+        yield item
+        _show(id+1)
+    sys.stdout.write("\n")
+    sys.stdout.flush()
+
 
 # all variables needed. Set the address correctly to the same as what ucrm is running on.
 
@@ -46,7 +61,8 @@ except:
 db.close()
 #Start of for loop range
 id = 1
-for id in range(1,int(count)):
+for id in progressbar(range(1,int(count)), "Loading Clients: ", 40):
+
 	# Checks to make sure the url is valid if not skips it
 	valid = requests.get(ucrm_url + url + str(id) + url1, headers=headers)
 	if valid.status_code == 200:
@@ -69,11 +85,8 @@ for id in range(1,int(count)):
 			try:
 				cursor.execute(sql + mac["macAddress"] + sql1)
 				db.commit()
-#				print "It works" + str(id)
 			except:
 				db.rollback()
-#				print "It didn't"
-#				print(sql + mac["macAddress"] + sql1)
 			db.close()
 
 		# request the package and write them to a file
@@ -96,22 +109,12 @@ for id in range(1,int(count)):
                                		try:
                                        		cursor.execute(sql2 + mac["macAddress"] + sql3 + "," + sql3 + json_dict["servicePlanName"] + sql4)
                                       		db.commit()
-#                                     		print "It works" + str(id)
                                		except:
                                       		db.rollback()
-#                                       		print "It didn't no mac address" 
                                		db.close()
 				# Deletes all the files created
 				os.remove(str(id)+".json")
 				os.remove(str(id)+"-speed.json")
 				# starts over the while loop.
 
-	# If url is not valid
-	else: 
-		print "no client here" + str(id)
-		if id == int(count) - 1:
-			db = MySQLdb.connect(DB_address, DB_username, DB_password, DB_table)
-			cursor = db.cursor()
-			cursor.execute("select * from radusergroup")
-			myresult = cursor.fetchall()
-			print myresult
+print "All Clients loaded."
