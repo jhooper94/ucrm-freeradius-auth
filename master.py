@@ -1,5 +1,5 @@
 from urllib2 import Request, urlopen
-import json, os, MySQLdb, requests, configparser
+import json, os, MySQLdb, requests, configparser, sys
 #v1.5b
 #Parse Config File. To fill out the important information needed to make the script work.
 config = configparser.ConfigParser()
