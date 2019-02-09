@@ -26,13 +26,13 @@ f.close()
 
 print "Time to configure"
 
-password = raw_input("Inter the Password to log into the sql server:  ")
+password = raw_input("Enter the Password to log into the sql server:  ")
 
-ucrm_url = raw_input("Inter in the url for ucrm, can be ip address:  ")
+ucrm_url = raw_input("Enter in the url for ucrm, can be ip address:  ")
 
-api_key = raw_input("Inter in ucrm api key:  ")
+api_key = raw_input("Enter in ucrm api key:  ")
 
-client_number = raw_input("Inter in a number above the number of clients you have:  ")
+client_number = raw_input("Enter in a number above the number of clients you have:  ")
 
 php = open("/var/www/html/daloradius/library/daloradius.conf.php","a+")
 php.write("$configValues['CONFIG_DB_PASS'] = '" + password + "';")
